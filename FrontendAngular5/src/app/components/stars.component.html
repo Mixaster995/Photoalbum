@@ -1,0 +1,42 @@
+<div class='static-stars'>
+        <b>Rating: </b>
+        <ul>
+            <li *ngFor="let index of starIndexes" class='star'>
+                <div *ngIf="raiting>=index; then coloredStar else uncoloredStar"></div>
+            </li>                                                        
+            <ng-template #coloredStar><i class='colored fa fa-star fa-fw'></i></ng-template>  
+            <ng-template #uncoloredStar><i class='uncolored fa fa-star fa-fw'></i></ng-template>    
+        </ul>
+</div>
+<p>
+
+<div *ngIf="userAuthorized && (currentUserRaiting==0)" class='rating-stars'>
+    <b>My rating: </b>
+    <ul>
+        <li *ngFor="let index of starIndexes" class='star'>
+            <i class='fa fa-star fa-fw' [star-raiting]="index" (click)="assessPhoto(index)"></i>         
+        </li>                                                
+    </ul>
+</div>
+<p>
+
+<div *ngIf="userAuthorized && (currentUserRaiting!=0)" class='static-stars'>
+        <b>My rating: </b>
+        <ul>
+            <li *ngFor="let index of starIndexes" class='star'>
+                <div *ngIf="currentUserRaiting>=index; then coloredStar else uncoloredStar"></div>
+            </li>                                                        
+            <ng-template #coloredStar><i class='colored fa fa-star fa-fw'></i></ng-template>  
+            <ng-template #uncoloredStar><i class='uncolored fa fa-star fa-fw'></i></ng-template>    
+        </ul>
+</div>
+<p>
+
+<div *ngIf="!userAuthorized" class='static-stars'>
+        <b>My rating: </b>
+        <ul>
+            <li *ngFor="let index of starIndexes" class='star'>
+                <i class='uncolored fa fa-star fa-fw'></i>
+            </li> 
+        </ul>
+</div>

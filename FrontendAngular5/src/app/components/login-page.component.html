@@ -1,0 +1,42 @@
+<div style="margin-top:5%">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="modalLogin" class="col-md-4 control-label">Login:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="modalLogin" name="username" placeholder="Enter the login"
+                        [(ngModel)]="user.Login" #login="ngModel" required maxlength="30" pattern="[a-zA-Z0-9_]*"/>
+                <div *ngIf="login.errors && (login.dirty || login.touched)" style="color:red;">      
+                    <div [hidden]="!login.errors.required">
+                        Please, enter your login
+                    </div>
+                    <div [hidden]="!login.errors.pattern">
+                        Login could only have latin letters, arabic numbers and "_" sign
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="modalPassword" class="col-md-4 control-label">Password:</label>
+            <div class="col-md-3">
+                <input type="password" class="form-control" id="modalPassword" name="password" placeholder="Enter the password"
+                    [(ngModel)]="user.Password" #password="ngModel" required minlength="6" maxlength="25" pattern="[a-zA-Z0-9_]*"/>
+                <div *ngIf="password.errors && (password.dirty || password.touched)" style="color:red;">      
+                    <div [hidden]="!password.errors.required">
+                        Please, enter your password
+                    </div>
+                    <div [hidden]="!password.errors.minlength">
+                        Password must be at least 6 characters long
+                    </div>
+                    <div [hidden]="!password.errors.pattern">
+                        Password could only have latin letters, arabic numbers and "_" sign
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-3">
+                <button [disabled]="login.invalid || password.invalid" (click)="logIn()" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </form>                  
+</div>

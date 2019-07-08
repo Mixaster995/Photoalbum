@@ -1,0 +1,12 @@
+<div>
+    <div class='image-container'>
+        <img class='img-responsive' src='{{fullPath}}'>
+    </div>
+    <div class='image-details'>
+        <h1>{{inputPhoto.Title}}</h1>
+        <p>{{inputPhoto.Description}}</p>
+        <p>Added by <a [routerLink]="[inputPhoto.UserLogin]">{{inputPhoto.UserLogin}}</a></p> 
+        <p>{{inputPhoto.Date}}</p>
+        <stars [raiting]="inputPhoto.Raiting" [photoId]="inputPhoto.PhotoId"></stars>
+    </div>
+</div>

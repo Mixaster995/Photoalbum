@@ -1,0 +1,22 @@
+<div class="row"> 
+
+        <div class='col-md-3'>
+            <p><h3>User: {{userlogin}}</h3>
+            <p><h4>His(her) name is {{currentUser.FirstName}}</h4>
+            <p><h4>His(her) lastname is {{currentUser.LastName}}</h4>
+        </div>
+
+        <div class="col-md-offset-0 col-md-6">
+            <main-photo-view *ngFor="let photo of photos" [inputPhoto]="photo"></main-photo-view>
+            <pager [inputPageNumber]="currentPage" [amountOfPages]="pagesCount" (pageChanged)="pageChanging($event)"></pager>
+        </div>
+    
+        <div class="col-md-3 sorter">
+            <b style="font-size:medium">Sort by:</b>       
+                <input type="radio" name="sort-mode" checked="checked" value="date" id="date" [checked]='true' [(ngModel)]="currentOrder" (change)="pageChanging(1)" />
+            <label for="date"> Date</label>
+                <input type="radio" name="sort-mode" value="raiting" id="raiting" [(ngModel)]="currentOrder" (change)="pageChanging(1)" />
+            <label for="raiting"> Raiting</label>
+        </div>
+    
+</div>

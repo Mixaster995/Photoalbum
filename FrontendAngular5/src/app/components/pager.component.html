@@ -1,0 +1,9 @@
+<div class="center">
+    <ul class='pagination'>
+        <li><a (click)='previousPage()'><span>&laquo;</span></a></li>
+        <li *ngFor="let index of currentIndexes" [ngClass]="{'active':inputPageNumber === index, 'invisible':index == 0}">
+            <a (click)='changePage(index)'>{{index}}</a>
+        </li>
+        <li><a (click)='nextPage()'><span>&raquo;</span></a></li>
+    </ul>
+</div>

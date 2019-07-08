@@ -1,0 +1,103 @@
+<div style="margin-top:5%">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputFirstName" class="col-md-4 control-label">First Name:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="inputFirstName" name="name" placeholder="Enter the firstname"
+                    [(ngModel)]="user.FirstName" #name="ngModel" required maxlength="30" pattern="[a-zA-Z]*"/>
+                <div *ngIf="name.errors && (name.dirty || name.touched)" style="color:red;">      
+                    <div [hidden]="!name.errors.required">
+                        Please, enter your name
+                    </div>
+                    <div [hidden]="!name.errors.pattern">
+                        Name could only have latin letters
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputLastName" class="col-md-4 control-label">Last Name:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="inputLastName" name="lastname" placeholder="Enter the lastname"
+                    [(ngModel)]="user.LastName" #lastname="ngModel" required maxlength="30" pattern="[a-zA-Z]*"/>
+                <div *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" style="color:red;">      
+                    <div [hidden]="!lastname.errors.required">
+                        Please, enter your last name
+                    </div>
+                    <div [hidden]="!lastname.errors.pattern">
+                        Last name could only have latin letters
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="col-md-4 control-label">E-mail:</label>
+            <div class="col-md-3">
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Enter the e-mail"
+                    [(ngModel)]="user.Email" #email="ngModel" required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}" />
+                <div *ngIf="email.errors && (email.dirty || email.touched)" style="color:red;">      
+                    <div [hidden]="!email.errors.required">
+                        Please, enter your e-mail
+                    </div>
+                    <div [hidden]="!email.errors.pattern">
+                        E-mail must fit the pattern, for example: johndoe@anymail.com
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputLogin" class="col-md-4 control-label">Login:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="inputLogin" name="login" placeholder="Enter the login"
+                       [(ngModel)]="user.Login" #login="ngModel" required maxlength="30" pattern="[a-zA-Z0-9_]*"/>
+                <div *ngIf="login.errors && (login.dirty || login.touched)" style="color:red;">      
+                    <div [hidden]="!login.errors.required">
+                        Please, enter your login
+                    </div>
+                    <div [hidden]="!login.errors.pattern">
+                        Login could only have latin letters, arabic numbers and "_" sign
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-md-4 control-label">Password:</label>
+            <div class="col-md-3">
+                <input type="password"  name="password" class="form-control" id="inputPassword" name="password" placeholder="Enter the password"
+                    [(ngModel)]="user.Password" #password="ngModel" required minlength="6" maxlength="25" pattern="[a-zA-Z0-9_]*"/>
+                <div *ngIf="password.errors && (password.dirty || password.touched)" style="color:red;">      
+                    <div [hidden]="!password.errors.required">
+                        Please, enter your password
+                    </div>
+                    <div [hidden]="!password.errors.minlength">
+                        Password must be at least 6 characters long
+                    </div>
+                    <div [hidden]="!password.errors.pattern">
+                        Password could only have latin letters, arabic numbers and "_" sign
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputConfirmPassword" class="col-md-4 control-label">Confirm password:</label>
+            <div class="col-md-3">
+                <input type="password" class="form-control" id="inputConfirmPassword" name="confirmpassword" placeholder="Repeat password"
+                    [(ngModel)]="user.ConfirmPassword" #confirmpassword="ngModel" required maxlength="25" validateEqual="password"/>
+                <div *ngIf="confirmpassword.errors && (confirmpassword.dirty || confirmpassword.touched)" style="color:red;">      
+                    <div [hidden]="!confirmpassword.errors.required">
+                        Please, confirm password
+                    </div>
+                    <div [hidden]="confirmpassword.invalid && confirmpassword.errors.required">
+                        Passwords do not match
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-3">
+                <button [disabled]="name.invalid || lastname.invalid || email.invalid || login.invalid || password.invalid
+                || confirmpassword.invalid" (click)="registration()" class="btn btn-primary">Registration</button>
+            </div>
+        </div>
+    </form>
+</div>

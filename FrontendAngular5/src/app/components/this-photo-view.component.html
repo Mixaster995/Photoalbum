@@ -1,0 +1,42 @@
+<div>
+    <div class='image-container'>
+        <img class='img-responsive' src='{{fullPath}}'>
+    </div>
+    <div class='image-details'>
+        <h1>{{inputPhoto.Title}}</h1>
+        <p><button class='btn btn-primary' data-toggle='modal' [attr.data-target]="'#' + inputPhoto.PhotoId">Edit</button>
+        <button class='btn btn-primary' (click)="deletePhoto()">Delete</button></p>
+        <p>{{inputPhoto.Description}}</p>
+        <p>Added {{inputPhoto.Date}}</p>
+        <p><stars [raiting]="inputPhoto?.Raiting" [photoId]="inputPhoto?.PhotoId"></stars></p>
+    </div>
+</div>
+
+<div [id]="inputPhoto.PhotoId" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body center">
+                <form>
+                    <div class="form-group">
+                        <label for="edit-image-name">Title:</label>
+                        <input type="text" class="form-control" id="edit-image-name" name="title" 
+                                                                            [(ngModel)]="editedPhoto.Title" #title="ngModel" required/>
+                        <div [hidden]="title.valid || title.untouched" style="color:red;">
+                            Title is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-image-description">Description:</label>
+                        <textarea class="form-control" id="edit-image-description" name="description" [(ngModel)]="editedPhoto.Description" #description="ngModel"></textarea>
+                    </div>
+                </form>
+                <div class="center">
+                    <button [disabled]="title.invalid" (click)="editPhoto()" class="btn btn-default" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

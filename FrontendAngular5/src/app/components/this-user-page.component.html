@@ -1,0 +1,46 @@
+<div class="row"> 
+
+        <div class="col-md-offset-3 col-md-6">
+            <div style="text-align:center;margin-top:30px">
+                <button class='btn btn-primary custom-button'  data-toggle='modal' data-target='#add-image-window'>Add new photo</button>
+            </div>
+            <this-photo-view (reloadCurrentPage)="ngOnInit()" *ngFor="let photo of photos" [inputPhoto]="photo"></this-photo-view>
+            <pager [inputPageNumber]="currentPage" [amountOfPages]="pagesCount" (pageChanged)="pageChanging($event)"></pager>
+        </div>
+     
+</div>
+
+<div id="add-image-window" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body center">
+                <form enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="modal-image-name">Title:</label>
+                        <input type="text" class="form-control" name="title" placeholder="Enter the title" 
+                                [(ngModel)]="photoInfo.Title" #title="ngModel" required/>
+                        <div [hidden]="title.valid || title.untouched" style="color:red;">
+                            Title is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-image-description">Description:</label>
+                        <textarea class="form-control" name="description" placeholder="Enter the description..." [(ngModel)]="photoInfo.Description" #description="ngModel"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="image" accept="image/*" id="modal-photo-image" (change)="addFile($event.target.files)">
+                    </div>
+                    <div [hidden]="isFileChosen" style="color:red;">
+                        File is required
+                    </div>
+                </form>
+                <div class="center">
+                    <button [disabled]="title.invalid || !isFileChosen" (click)="addPhoto()" class="btn btn-default" data-dismiss="modal">Add photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

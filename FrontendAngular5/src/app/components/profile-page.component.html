@@ -1,0 +1,136 @@
+<div class='col-md-offset-4 col-md-4'>
+    <h2>Personal data</h2>
+        <table *ngIf="!editing">
+            <tr>
+                <td><b>First Name: </b></td>
+                <td>{{responseUserData?.FirstName}}</td>
+            </tr>
+            <tr>
+                <td><b>Last Name: </b></td>
+                <td>{{responseUserData?.LastName}}</td>
+            </tr>
+            <tr>
+                <td><b>E-mail: </b></td>
+                <td>{{responseUserData?.Email}}</td>
+            </tr>
+            <tr>
+                <td><button class='btn btn-primary' (click)="toggleEditWindow()">Edit profile</button></td>
+                <td><button class='btn btn-primary' data-toggle='modal' data-target='#change-password-window'>Change password</button></td>  
+            </tr> 
+        </table>    
+
+        <table *ngIf="editing">
+            <tr>
+                <td><b>First Name: </b></td>
+                <td>
+                    <input type="text" name="name" placeholder="Enter the firstname"
+                                [(ngModel)]="editedUserData.FirstName" #name="ngModel" maxlength="30" required pattern="[a-zA-Z]*"/>
+                   <div *ngIf="name.errors && (name.dirty || name.touched)" style="color:red;">      
+                        <div [hidden]="!name.errors.required">
+                            Please, enter your name
+                        </div>
+                        <div [hidden]="!name.errors.pattern">
+                            Name could only have latin letters
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Last Name: </b></td>
+                <td>
+                    <input type="text" name="lastname" placeholder="Enter the lastname"
+                                [(ngModel)]="editedUserData.LastName" #lastname="ngModel" required maxlength="30" pattern="[a-zA-Z]*"/>
+                    <div *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" style="color:red;">      
+                        <div [hidden]="!lastname.errors.required">
+                            Please, enter your last name
+                        </div>
+                        <div [hidden]="!lastname.errors.pattern">
+                            Last name could only have latin letters
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><b>E-mail: </b></td>
+                <td>
+                    <input type="email" name="email" placeholder="Enter the e-mail"
+                                [(ngModel)]="editedUserData.Email" #email="ngModel" required pattern="[a-zA-Z0-9_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}" />
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" style="color:red;">      
+                        <div [hidden]="!email.errors.required">
+                            Please, enter your e-mail
+                        </div>
+                        <div [hidden]="!email.errors.pattern">
+                            E-mail must fit the pattern, for example: johndoe@anymail.com
+                        </div>
+                    </div>                            
+                </td>
+            </tr>
+            <tr>
+                <td><button class='btn btn-primary' [disabled]="name.invalid || lastname.invalid || email.invalid" (click)="editUserData()">Save changes</button></td>
+                <td><button class='btn btn-primary' (click)="toggleEditWindow()">Cancel editing</button></td>  
+            </tr> 
+        </table>    
+</div>
+
+<div id="change-password-window" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body center">
+                <form>
+                    <div class="form-group">
+                        <label for="old-password">Old password:</label>
+                        <input type="password" class="form-control" id="old-password" placeholder="Old password" name="oldpassword" placeholder="Enter the old password"
+                                    [(ngModel)]="newCredentials.OldPassword" #oldpassword="ngModel" required minlength="6" maxlength="25" pattern="[a-zA-Z0-9_]"/>
+                    <div *ngIf="oldpassword.errors && (oldpassword.dirty || oldpassword.touched)" style="color:red;">      
+                        <div [hidden]="!oldpassword.errors.required">
+                            Please, enter current password
+                        </div>
+                        <div [hidden]="!oldpassword.errors.minlength">
+                            Password must be at least 6 characters long
+                        </div>
+                        <div [hidden]="!oldpassword.errors.pattern">
+                            Password could only have latin letters, arabic numbers and "_" sign
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">New password:</label>
+                        <input type="password" class="form-control" id="new-password" placeholder="New password"name="newpassword" placeholder="Enter the new password"
+                                    [(ngModel)]="newCredentials.NewPassword" #newpassword="ngModel" required minlength="6" maxlength="25" pattern="[a-zA-Z0-9_]"/>
+                        <div *ngIf="newpassword.errors && (newpassword.dirty || newpassword.touched)" style="color:red;">      
+                            <div [hidden]="!newpassword.errors.required">
+                                Please, enter current password
+                            </div>
+                            <div [hidden]="!newpassword.errors.minlength">
+                                Password must be at least 6 characters long
+                            </div>
+                            <div [hidden]="!newpassword.errors.pattern">
+                                Password could only have latin letters, arabic numbers and "_" sign
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-new-password">Confirm new password:</label>
+                        <input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm new password" name="confirmpassword" 
+                            placeholder="Repeat new password" [(ngModel)]="newCredentials.ConfirmPassword" #confirmpassword="ngModel" required 
+                            maxlength="25" validateEqual="newpassword"/>
+                        <div *ngIf="confirmpassword.errors && (confirmpassword.dirty || confirmpassword.touched)" style="color:red;">      
+                            <div [hidden]="!confirmpassword.errors.required">
+                                Please, confirm password
+                            </div>
+                            <div [hidden]="confirmpassword.invalid && confirmpassword.errors.required">
+                                Passwords do not match
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <button [disabled]="oldpassword.invalid || newpassword.invalid || confirmpassword.invalid" (click)="changePassword()" class="btn btn-primary" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
